@@ -1,0 +1,284 @@
+
+package LenguajeCopias;
+
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+
+import models.Clase;
+import models.Metodo;
+
+//Parser Code
+parser code 
+{:
+    public void syntax_error(Symbol sim){
+        System.out.println("Error recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+    }
+    public void unrecovered_syntax_error(Symbol sim){
+        System.out.println("Error NO recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+    }
+    public Clase clase = new Clase();
+    public Metodo metodo = new Metodo();
+    public LinkedList<Clase> clases = new LinkedList<Clase>();
+    public LinkedList<String> variables = new LinkedList<String>();
+:}
+
+//Action code
+action code
+{:
+
+:}
+
+//Terminales
+terminal    CLASS,
+            PARENTESIS_A,
+            PARENTESIS_C,
+            LLAVE_A,
+            LLAVE_C,
+            COMA,
+            P_COMA,
+            VAR,
+            LET,
+            CONST,
+            IGUAL,
+            IDENTIFICADOR,
+            NUMERO,
+            CADENA,
+            TRUE,
+            FALSE,
+            IF,
+            ELSE,
+            DOBLE_IGUAL,
+            DESIGUAL,
+            MENOR,
+            MENOR_IGUAL,
+            MAYOR,
+            MAYOR_IGUAL,
+            AND,
+            OR,
+            NOT,
+            MAS,
+            MENOS,
+            ASTERISCO,
+            DIAGONAL,
+            POTENCIA,
+            MODULO,
+            DOBLE_MAS,
+            DOBLE_MENOS,
+            FOR,
+            DO,
+            WHILE,
+            SWITCH,
+            CASE,
+            DOS_PUNTOS,
+            BREAK,
+            DEFAULT,
+            CONSOLELOG,
+            REQUIRE
+;
+
+
+non terminal    libre,
+                clase,
+                contClase,
+                metodo,
+                metodoParams,
+                contMetodo,
+                declaracion,
+                if,
+                elif,
+                for,
+                condFor,
+                while,
+                dowhile,
+                switch,
+                contSwitch,
+                consol,
+                llamada,
+                llamadaParams,
+                importacion,
+                initDeclaracion,
+                finLinea,
+                boolValores,
+                valores,
+                operacion,
+                relacion,
+                condicion,
+                operadorAritmetico,
+                operadoresLogicos,
+                operadoresRelacionales
+;
+
+// Inicializacion
+
+start with libre;
+
+libre ::= libre clase
+    | libre importacion
+    |
+;
+
+initDeclaracion ::= VAR IDENTIFICADOR:a
+        {:
+            variables.add(a.toString());
+        :}
+    | LET IDENTIFICADOR:a
+        {:
+            variables.add(a.toString());
+        :}
+    | CONST IDENTIFICADOR:a
+        {:
+            variables.add(a.toString());
+        :}
+;
+
+boolValores ::= TRUE
+    | FALSE
+;
+
+valores ::= CADENA
+    | NUMERO
+    | boolValores
+    | IDENTIFICADOR
+;
+
+operadorAritmetico ::= MAS
+    | MENOS
+    | ASTERISCO
+    | DIAGONAL
+    | POTENCIA
+    | MODULO
+;
+
+operadoresLogicos ::= AND
+    | OR
+;
+
+operadoresRelacionales ::= DOBLE_IGUAL
+    | DESIGUAL
+    | MENOR
+    | MENOR_IGUAL
+    | MAYOR
+    | MAYOR_IGUAL
+;
+
+operacion ::= valores
+//    | NOT valores
+    | operacion operadorAritmetico valores
+    | operacion operadorAritmetico NOT valores
+;
+
+relacion ::= operacion operadoresRelacionales operacion
+    | relacion operadoresRelacionales operacion
+;
+
+condicion ::= relacion
+    | NOT relacion
+    | condicion operadoresLogicos relacion
+    | condicion operadoresLogicos NOT relacion
+;
+
+finLinea ::= P_COMA
+    |
+;
+
+importacion ::= initDeclaracion IGUAL REQUIRE PARENTESIS_A CADENA PARENTESIS_C finLinea
+;
+
+clase ::= CLASS:a IDENTIFICADOR:b LLAVE_A contClase LLAVE_C:c
+    {:
+        clase.nombre = b.toString();
+        clase.lineas = cright - aright + 1;
+        clases.add(clase);
+        clase = new Clase();
+    :}
+;
+
+contClase ::= contClase declaracion
+    | contClase metodo
+    |
+;
+
+declaracion ::= initDeclaracion IGUAL NUMERO finLinea
+    | initDeclaracion IGUAL CADENA finLinea
+    | initDeclaracion IGUAL boolValores finLinea
+    | initDeclaracion finLinea
+    | IDENTIFICADOR IGUAL valores finLinea
+;
+
+metodoParams ::= IDENTIFICADOR:a
+        {:
+            metodo.params.add(a.toString());
+        :}
+    | metodoParams COMA IDENTIFICADOR:a
+        {:
+            metodo.params.add(a.toString());
+        :}
+    | 
+;
+
+metodo ::= IDENTIFICADOR:a PARENTESIS_A metodoParams PARENTESIS_C LLAVE_A contMetodo LLAVE_C:b
+    {:
+        metodo.nombre = a.toString();
+        metodo.lineas = bright - aright + 1;
+        clase.metodos.add(metodo);
+        metodo = new Metodo();
+    :}
+;
+
+contMetodo ::= contMetodo declaracion
+    | contMetodo if
+    | contMetodo for
+    | contMetodo while
+    | contMetodo dowhile
+    | contMetodo switch
+    | contMetodo consol
+    | contMetodo llamada
+    | 
+;
+
+if ::= IF PARENTESIS_A condicion PARENTESIS_C LLAVE_A contMetodo LLAVE_C
+    | IF PARENTESIS_A condicion PARENTESIS_C LLAVE_A contMetodo LLAVE_C elif ELSE LLAVE_A contMetodo LLAVE_C
+;
+
+elif ::= elif ELSE IF PARENTESIS_A condicion PARENTESIS_C LLAVE_A contMetodo LLAVE_C
+    |
+;
+
+for ::= FOR PARENTESIS_A condFor PARENTESIS_C LLAVE_A contMetodo LLAVE_C
+;
+
+condFor ::= initDeclaracion IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MAS
+    | initDeclaracion IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MENOS
+    | IDENTIFICADOR IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MAS
+    | IDENTIFICADOR IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MENOS
+;
+
+while ::= WHILE PARENTESIS_A condicion PARENTESIS_C LLAVE_A contMetodo LLAVE_C
+;
+
+dowhile ::= DO LLAVE_A contMetodo LLAVE_C WHILE PARENTESIS_A condicion PARENTESIS_C finLinea
+;
+
+switch ::= SWITCH PARENTESIS_A IDENTIFICADOR PARENTESIS_C LLAVE_A contSwitch LLAVE_C
+;
+
+contSwitch ::= contSwitch CASE valores DOS_PUNTOS contMetodo BREAK finLinea
+    | contSwitch DEFAULT DOS_PUNTOS contMetodo
+    | contSwitch DEFAULT DOS_PUNTOS contMetodo BREAK finLinea
+    |
+;
+
+consol ::= CONSOLELOG PARENTESIS_A operacion PARENTESIS_C finLinea
+;
+
+llamada ::= IDENTIFICADOR PARENTESIS_A llamadaParams PARENTESIS_C finLinea
+;
+
+llamadaParams ::= valores
+    | llamadaParams COMA valores
+    |
+;
+
+
+
+

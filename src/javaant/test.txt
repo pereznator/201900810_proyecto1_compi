@@ -1,0 +1,40 @@
+GenerarReporteEstadistico {
+    compare("C:/Users/jorge/Documents/USAC DOCUMENTS/Segundo Semestre 2021/compi/laboratorio/proyectos/proyecto1", "C:/Users/jorge/Documents/USAC DOCUMENTS/Segundo Semestre 2021/compi/laboratorio/proyectos/proyecto2");
+    DefinirGlobales {
+        double carclasspoints = ${PuntajeEspecifico, "archivo1.js", "clase", "carclasspoints"}; 
+        double generico1 = ${PuntajeGeneral}; 
+        double num1 = 12;
+        double dec = 3.45;
+        string nom = "HIHIH";
+    }
+
+    graficaBarras{
+        Titulo: nombre;
+        EjeX: ["valor1", nombre1, "valor3"];
+        Valores: [1, 3, ${PuntajeEspecifico, "archivo1.js", "clase", "carclasspoints"}, ${PuntajeGeneral}];
+        TituloY: "Este es el titulo Y";
+        TituloX: "Este es el titulo para X";
+    }
+
+    graficaBarras{
+        Valores: [4, 5, 6, 7];
+        TituloX: "Eso tilinX";
+        TituloY: "eso tiliny";
+        EjeX: ["ejex1", nom, "ejex3", variable];
+        Titulo: "El titulo de la grafica 2";
+    }
+
+    GraficaPie {
+        Titulo: nombre;
+        EjeX: ["valorPie1", nombrePIE1, "valorPIE3", valor4, valor5];
+        Valores: [1.4, 2.4, 3.1, 4.5, 5.9];
+    }
+
+    GraficaLineas {
+        Titulo: nombre2Lineas;
+        Archivo: "ruta archivo grafica lineas";
+    }
+}
+
+
+

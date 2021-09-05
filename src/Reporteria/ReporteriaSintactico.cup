@@ -1,0 +1,270 @@
+
+package Reporteria;
+
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+
+import models.VariableReporteria;
+import models.Grafica;
+import models.PuntajeGeneral;
+import models.PuntajeEspecifico;
+
+//Parser Code
+parser code 
+{:
+    public void syntax_error(Symbol sim){
+        System.out.println("Error recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+    }
+    public void unrecovered_syntax_error(Symbol sim){
+        System.out.println("Error NO recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+    }
+    public LinkedList<Grafica> graficas = new LinkedList<Grafica>();
+    public Grafica graf = new Grafica();
+    public LinkedList<VariableReporteria> variables = new LinkedList<VariableReporteria>();
+    public String[] rutas = new String[2];
+
+:}
+
+//Action code
+action code
+{:
+
+:}
+
+//Terminales
+terminal    DEFINIR_GLOBALES,
+            GENERAR_REPORTE_ESTADISTICO,
+            GRAFICA_BARRAS,
+            GRAFICA_PIE,
+            GRAFICA_LINEAS,
+            PUNTAJE_GENERAL,
+            PUNTAJE_ESPECIFICO,
+            DOLLAR,
+            LLAVE_A,
+            LLAVE_C,
+            COMPARE,
+            PARENTESIS_A,
+            PARENTESIS_C,
+            CUADRADA_A,
+            CUADRADA_C,
+            COMA,
+            P_COMA,
+            DOS_PUNTOS,
+            IGUAL,
+            STRING,
+            DOUBLE,
+            TITULO,
+            EJEX,
+            VALORES,
+            TITULOX,
+            TITULOY,
+            ARCHIVO;
+
+terminal String DECIMAL;
+terminal String NUMERO;
+terminal String IDENTIFICADOR;
+terminal String CADENA;
+
+//No terminales
+
+non terminal libre,
+            definir_glob,
+                definiciones,
+            generar_reporte,
+                instrucciones,
+            graf_barras,
+                instrucciones_barras,
+            graf_pie,
+                instrucciones_pie,
+            graf_lineas,
+                instrucciones_lineas,
+            arreglostring,
+            arreglonumerico,
+            puntaje,
+            valorstring,
+            valornumerico,
+            compar
+;
+            
+
+// Inicializacion
+
+start with libre;
+
+libre ::= libre generar_reporte
+    |
+;
+
+puntaje ::= DOLLAR LLAVE_A PUNTAJE_GENERAL LLAVE_C
+        {:
+            RESULT = new PuntajeGeneral();
+        :}
+    | DOLLAR LLAVE_A PUNTAJE_ESPECIFICO COMA CADENA:a COMA CADENA:b COMA CADENA:c LLAVE_C
+        {:
+            RESULT = new PuntajeEspecifico(a.toString(), b.toString(), c.toString());
+        :}
+;
+
+valorstring ::= CADENA:a
+        {:
+            RESULT=a;
+        :}
+    | IDENTIFICADOR:a
+        {:
+            RESULT=a;
+        :}
+;
+
+valornumerico ::= NUMERO:a
+        {:
+            RESULT=a;
+        :}
+    | DECIMAL:a
+        {:
+            RESULT=a;
+        :}
+    | IDENTIFICADOR:a
+        {:
+            RESULT=a;
+        :}
+    | puntaje:a
+        {:
+            RESULT = a;
+        :}
+;
+
+arreglostring ::= valorstring:a
+        {:
+            graf.ejex.add(a.toString());
+        :}
+    | arreglostring COMA valorstring:a
+        {:
+            graf.ejex.add(a.toString());
+        :}
+    |
+;
+
+arreglonumerico ::= valornumerico:a
+        {:
+            graf.valores.add(a);
+        :}
+    | arreglonumerico COMA valornumerico:a
+        {:
+            graf.valores.add(a);
+        :}
+    |
+;
+
+definir_glob ::= DEFINIR_GLOBALES LLAVE_A definiciones LLAVE_C
+;
+
+definiciones ::= definiciones STRING IDENTIFICADOR:a IGUAL CADENA:b P_COMA
+                    {:
+                        VariableReporteria newVar = new VariableReporteria("STRING", a, b, -1, -1, null, null);
+                        variables.add(newVar);
+                    :}
+    | definiciones DOUBLE IDENTIFICADOR:a IGUAL NUMERO:b P_COMA
+        {:
+            VariableReporteria newVar = new VariableReporteria("INT", a, null, Integer.parseInt(b), -1, null, null);
+            variables.add(newVar);
+        :}
+    | definiciones DOUBLE IDENTIFICADOR:a IGUAL DECIMAL:b P_COMA
+        {:
+            VariableReporteria newVar = new VariableReporteria("DOUBLE", a, null, -1, Double.parseDouble(b), null, null);
+            variables.add(newVar);
+        :}
+    | definiciones DOUBLE IDENTIFICADOR:a IGUAL puntaje:b P_COMA
+        {:
+            if (b instanceof PuntajeGeneral){
+                VariableReporteria newVar = new VariableReporteria("PUNTAJE GENERAL", a, null, -1, -1, new PuntajeGeneral(), null);
+                variables.add(newVar);
+            }else {
+                PuntajeEspecifico pe = new PuntajeEspecifico(((PuntajeEspecifico)b).archivo, ((PuntajeEspecifico)b).campo1, ((PuntajeEspecifico)b).campo2);
+                VariableReporteria newVar = new VariableReporteria("PUNTAJE ESPECIFICO", a, null, -1, -1, null, pe);
+                variables.add(newVar);
+            }
+        :}
+    |
+;
+
+generar_reporte ::= GENERAR_REPORTE_ESTADISTICO LLAVE_A instrucciones LLAVE_C
+;
+
+instrucciones ::= instrucciones definir_glob
+    | instrucciones graf_barras
+    | instrucciones graf_pie
+    | instrucciones graf_lineas
+    | instrucciones compar
+    | error P_COMA
+    | error LLAVE_C
+    |
+;
+
+compar ::= COMPARE PARENTESIS_A valorstring:a COMA valorstring:b PARENTESIS_C P_COMA
+        {:
+            rutas[0] = a.toString();
+            rutas[1] = b.toString();
+        :}
+;
+
+graf_barras ::= GRAFICA_BARRAS LLAVE_A instrucciones_barras LLAVE_C
+    {:
+        graf.tipo = "BARRAS";
+        graficas.add(graf);
+        graf = new Grafica();
+    :}
+;
+
+instrucciones_barras ::= instrucciones_barras TITULO DOS_PUNTOS valorstring:a P_COMA
+        {:
+            graf.titulo = a.toString();
+        :}
+    | instrucciones_barras EJEX DOS_PUNTOS CUADRADA_A arreglostring CUADRADA_C P_COMA
+    | instrucciones_barras VALORES DOS_PUNTOS CUADRADA_A arreglonumerico CUADRADA_C P_COMA
+    | instrucciones_barras TITULOX DOS_PUNTOS valorstring:a P_COMA
+        {:
+            graf.titulox = a.toString();
+        :}
+    | instrucciones_barras TITULOY DOS_PUNTOS valorstring:a P_COMA
+        {:
+            graf.tituloy = a.toString();
+        :}
+    |
+;
+
+graf_pie ::= GRAFICA_PIE LLAVE_A instrucciones_pie LLAVE_C
+    {:
+        graf.tipo = "PIE";
+        graficas.add(graf);
+        graf = new Grafica();
+    :}
+;
+
+instrucciones_pie ::= instrucciones_pie TITULO DOS_PUNTOS valorstring:a P_COMA
+        {:
+            graf.titulo = a.toString();
+        :}
+    | instrucciones_pie EJEX DOS_PUNTOS CUADRADA_A arreglostring CUADRADA_C P_COMA
+    | instrucciones_pie VALORES DOS_PUNTOS CUADRADA_A arreglonumerico CUADRADA_C P_COMA
+    |
+;
+
+graf_lineas ::= GRAFICA_LINEAS LLAVE_A instrucciones_lineas LLAVE_C
+    {:
+        graf.tipo = "LINEAS";
+        graficas.add(graf);
+        graf = new Grafica();
+    :}
+;
+
+instrucciones_lineas ::= instrucciones_lineas TITULO DOS_PUNTOS valorstring:a P_COMA
+        {:
+            graf.titulo = a.toString();
+        :}
+    | instrucciones_lineas ARCHIVO DOS_PUNTOS valorstring:a P_COMA
+        {:
+            graf.archivo = a.toString();
+        :}
+    |
+;
+

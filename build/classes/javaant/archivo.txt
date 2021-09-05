@@ -1,0 +1,39 @@
+##Comentario de una linea
+#* 
+este es el comentario multilinea 
+*#
+
+DefinirGlobales {
+    string var2e = "Jorge";
+    string nombre1 = "Jorge";
+    double numero = 89;
+    double numero2 = 1.5;
+    double numero3 = 1.14;
+}
+
+GenerarReporteEstadistico {
+    compare("ruta1", "ruta2");
+}
+
+
+graficaBarras{
+    Titulo: nombre;
+    EjeX: ["valor1", nombre1, "valor3"];
+    Valores: [1, 3, 4];
+    TituloY: "Este es el titulo Y";
+    TituloX: "Este es el titulo para X";
+}
+
+GraficaPie {
+    Titulo: nombre;
+    EjeX: ["valorPie1", nombrePIE1, "valorPIE3"];
+    Valores: [1, 3, 4];
+}
+
+GraficaLineas {
+    Titulo: nombre2;
+    Archivo: "ruta archivo grafica lineas";
+}
+
+
+
