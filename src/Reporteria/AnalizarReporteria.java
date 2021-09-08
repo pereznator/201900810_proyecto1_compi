@@ -46,25 +46,6 @@ public class AnalizarReporteria {
         String estado = "";
         if (this.lector != null) {
             this.lexer = new LexerReporteriaCup(this.lector);
-            LinkedList<ErrorLex> errores = this.lexer.errores;
-            System.out.println("Errores size: "+errores.size());
-            if (errores.size() > 0) {
-                estado += "Errores Lexicos:\n";
-                for (ErrorLex err : errores) {
-                    estado += "Simbolo no reconocido: "+err.valor+" en la linea "+err.linea+" en la columna "+err.columna+".\n";
-                }
-            }else {
-                estado += "No hay errores lexicos!";
-            }
-        }else {
-            System.out.println("No se puede iniciar el lexer");
-            estado = "No se puede iniciar el lexer";
-        }
-        return estado;
-    }
-    
-    public void analiadorSintactico(){
-        if (this.lexer != null) {
             this.parser = new ReporteriaParser(this.lexer);
             try {
                 this.parser.parse();
@@ -72,16 +53,37 @@ public class AnalizarReporteria {
             } catch (Exception ex) {
                 Logger.getLogger(AnalizarReporteria.class.getName()).log(Level.SEVERE, null, ex);
             }
+            LinkedList<ErrorLex> errores = this.lexer.errores;
+            if (errores.size() > 0) {
+                estado += "Errores Lexicos:\n";
+                for (ErrorLex err : errores) {
+                    estado += "Simbolo no reconocido: "+err.valor+" en la linea "+err.linea+" en la columna "+err.columna+".\n";
+                }
+            }else {
+                estado += "No hay errores lexicos! \nFIN analisis Lexico \n";
+            }
+            estado += "Inicio Analizador Sintactico";
         }else {
-            System.out.println("No hay lexer");
+            System.out.println("No se puede iniciar el lexer");
+            estado = "No se puede iniciar el lexer";
         }
+        return estado;
     }
     
-    public void analizarCopias() throws IOException {
+    public String analizarCopias() throws IOException {
         String estados = "";
-        this.parser = new ReporteriaParser(lexer);
-            try {
-                this.parser.parse();
+        if (parser.errores.size() > 0) {
+            estados += "Errores Sintacticos: \n";
+        }
+        for (ErrorLex error : parser.errores) {
+            estados += error.mensaje +": " + error.valor + " en linea: " + error.linea + " columna: " + error.columna + "\n";
+        }
+        estados += "Fin Analisis Sintactico";
+        if (parser.rutas[0].length() > 0 && parser.rutas[1].length() > 0) {
+            System.out.println("Si hay rutas para comparar");
+        }
+            /*try {
+                
                 LinkedList<VariableReporteria> vars = parser.variables;
                 System.out.println("================================");
                 for (int x = 0; x < vars.size(); x++) {
@@ -137,6 +139,7 @@ public class AnalizarReporteria {
             } catch (Exception e) {
                 System.out.println("algo salio mal en el parser!");
                 System.out.println(e);
-            }
+            }*/
+        return estados;
     }
 }

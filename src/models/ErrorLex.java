@@ -12,6 +12,7 @@ package models;
 public class ErrorLex {
     public String mensaje, valor = null;
     public int linea, columna = 0;
+    public String archivo = "";
     public ErrorLex(String mensaje, String valor, int linea, int columna) {
         this.mensaje = mensaje;
         this.valor = valor;

@@ -6,15 +6,19 @@ import java.util.LinkedList;
 
 import models.Clase;
 import models.Metodo;
+import models.ErrorLex;
 
 //Parser Code
 parser code 
 {:
+    public LinkedList<ErrorLex> errores = new LinkedList<ErrorLex>();
     public void syntax_error(Symbol sim){
-        System.out.println("Error recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+        System.out.println("[Error recuperable]: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+        errores.add(new ErrorLex("Error Sintactico Recuperable", sim.value.toString(), sim.right+1, sim.left+1));
     }
     public void unrecovered_syntax_error(Symbol sim){
-        System.out.println("Error NO recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+        System.out.println("[Error NO recuperable]: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+        errores.add(new ErrorLex("Error Sintactico No Recuperable", sim.value.toString(), sim.right+1, sim.left+1));
     }
     public Clase clase = new Clase();
     public Metodo metodo = new Metodo();
@@ -105,7 +109,9 @@ non terminal    libre,
                 condicion,
                 operadorAritmetico,
                 operadoresLogicos,
-                operadoresRelacionales
+                operadoresRelacionales,
+                declaracionClase,
+                finFor
 ;
 
 // Inicializacion
@@ -162,9 +168,18 @@ operadoresRelacionales ::= DOBLE_IGUAL
 ;
 
 operacion ::= valores
-//    | NOT valores
     | operacion operadorAritmetico valores
     | operacion operadorAritmetico NOT valores
+    /*| operacion PARENTESIS_C
+    | PARENTESIS_A valores
+    | operacion PARENTESIS_C
+    | NOT valores
+    | operacion valores PARENTESIS_C
+    | operacion operadorAritmetico PARENTESIS_A valores
+    | operacion operadorAritmetico PARENTESIS_A valores PARENTESIS_C
+    | operacion operadorAritmetico PARENTESIS_A NOT valores
+    | operacion operadorAritmetico NOT valores PARENTESIS_C
+    | operacion operadorAritmetico PARENTESIS_A NOT valores PARENTESIS_C*/
 ;
 
 relacion ::= operacion operadoresRelacionales operacion
@@ -193,16 +208,29 @@ clase ::= CLASS:a IDENTIFICADOR:b LLAVE_A contClase LLAVE_C:c
     :}
 ;
 
-contClase ::= contClase declaracion
-    | contClase metodo
+contClase ::= contClase metodo
+    | contClase declaracionClase
+    | error P_COMA
+    | error LLAVE_C
     |
 ;
 
-declaracion ::= initDeclaracion IGUAL NUMERO finLinea
+declaracionClase ::= IDENTIFICADOR:a IGUAL operacion finLinea
+    {:
+        variables.add(a.toString());
+    :}
+; 
+
+declaracion ::= initDeclaracion IGUAL operacion finLinea
+    | IDENTIFICADOR IGUAL operacion finLinea
+    | IDENTIFICADOR DOBLE_MAS finLinea
+    | IDENTIFICADOR DOBLE_MENOS finLinea
+    | initDeclaracion finLinea
+    /*initDeclaracion IGUAL NUMERO finLinea
     | initDeclaracion IGUAL CADENA finLinea
     | initDeclaracion IGUAL boolValores finLinea
     | initDeclaracion finLinea
-    | IDENTIFICADOR IGUAL valores finLinea
+    | IDENTIFICADOR IGUAL valores finLinea*/
 ;
 
 metodoParams ::= IDENTIFICADOR:a
@@ -233,6 +261,8 @@ contMetodo ::= contMetodo declaracion
     | contMetodo switch
     | contMetodo consol
     | contMetodo llamada
+    | error P_COMA
+    | error LLAVE_C
     | 
 ;
 
@@ -247,10 +277,14 @@ elif ::= elif ELSE IF PARENTESIS_A condicion PARENTESIS_C LLAVE_A contMetodo LLA
 for ::= FOR PARENTESIS_A condFor PARENTESIS_C LLAVE_A contMetodo LLAVE_C
 ;
 
-condFor ::= initDeclaracion IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MAS
-    | initDeclaracion IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MENOS
-    | IDENTIFICADOR IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MAS
-    | IDENTIFICADOR IGUAL operacion P_COMA IDENTIFICADOR operadoresRelacionales operacion P_COMA IDENTIFICADOR DOBLE_MENOS
+condFor ::= initDeclaracion IGUAL operacion P_COMA relacion P_COMA finFor
+    | IDENTIFICADOR IGUAL operacion P_COMA relacion P_COMA finFor
+    | initDeclaracion IGUAL operacion P_COMA relacion P_COMA operacion IGUAL operacion
+    | IDENTIFICADOR IGUAL operacion P_COMA relacion P_COMA operacion IGUAL operacion
+;
+
+finFor ::= IDENTIFICADOR DOBLE_MAS
+    | IDENTIFICADOR DOBLE_MENOS
 ;
 
 while ::= WHILE PARENTESIS_A condicion PARENTESIS_C LLAVE_A contMetodo LLAVE_C
@@ -274,8 +308,8 @@ consol ::= CONSOLELOG PARENTESIS_A operacion PARENTESIS_C finLinea
 llamada ::= IDENTIFICADOR PARENTESIS_A llamadaParams PARENTESIS_C finLinea
 ;
 
-llamadaParams ::= valores
-    | llamadaParams COMA valores
+llamadaParams ::= operacion
+    | llamadaParams COMA operacion
     |
 ;
 

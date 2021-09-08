@@ -9,6 +9,7 @@ package LenguajeCopias;
 import java.util.LinkedList;
 import java_cup.runtime.Symbol;
 import models.ErrorLex;
+import models.Token;
 
 //Segunda Parte
 /*-----------------------------------Opciones y Declaraciones---------------------------*/
@@ -43,7 +44,7 @@ public class LexerCopias implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\1\u0100\36\u0200\1\u0300\1\u0400\266\u0200\10\u0500\u1020\u0200";
+    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -71,21 +72,18 @@ public class LexerCopias implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\2\3\1\1\22\0\1\1\1\4"+
+    "\11\0\1\1\1\2\2\3\1\2\22\0\1\1\1\4"+
     "\1\5\2\0\1\6\1\7\1\10\1\11\1\12\1\13"+
     "\1\14\1\15\1\16\1\17\1\20\12\21\1\22\1\23"+
-    "\1\24\1\25\1\26\2\0\1\27\1\30\1\31\1\32"+
-    "\1\33\1\34\1\35\1\36\1\37\1\40\1\41\1\42"+
-    "\1\40\1\43\1\44\1\40\1\45\1\46\1\47\1\50"+
-    "\1\51\1\52\1\53\3\40\6\0\1\27\1\30\1\31"+
-    "\1\32\1\33\1\34\1\35\1\36\1\37\1\40\1\41"+
-    "\1\42\1\40\1\43\1\44\1\40\1\45\1\46\1\47"+
-    "\1\50\1\51\1\52\1\53\3\40\1\54\1\55\1\56"+
-    "\7\0\1\3\252\0\2\57\115\0\1\60\u01a8\0\2\3"+
-    "\u0100\0\1\61\325\0\u0100\3";
+    "\1\24\1\25\1\26\2\0\32\27\4\0\1\30\1\0"+
+    "\1\31\1\32\1\33\1\34\1\35\1\36\1\37\1\40"+
+    "\1\41\1\27\1\42\1\43\1\27\1\44\1\45\1\27"+
+    "\1\46\1\47\1\50\1\51\1\52\1\53\1\54\3\27"+
+    "\1\55\1\56\1\57\7\0\1\3\u01a2\0\2\3\326\0"+
+    "\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[1536];
+    int [] result = new int[1024];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -112,19 +110,16 @@ public class LexerCopias implements java_cup.runtime.Scanner {
     "\1\0\1\1\1\2\1\3\1\1\1\4\2\1\1\5"+
     "\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
     "\1\16\1\17\1\20\1\21\15\22\1\23\1\1\1\24"+
-    "\2\1\1\25\1\0\1\26\1\27\1\0\1\30\1\31"+
-    "\1\32\3\0\1\33\1\34\1\35\5\22\1\36\3\22"+
-    "\1\37\6\22\1\40\1\37\2\0\1\41\1\14\2\22"+
-    "\1\0\4\22\1\0\1\22\1\42\1\43\2\22\1\0"+
-    "\1\22\1\44\1\22\1\0\1\45\1\22\2\46\1\22"+
-    "\1\0\1\22\1\0\1\22\2\47\1\22\1\0\2\22"+
-    "\1\0\1\50\1\22\1\0\2\51\2\52\1\22\1\53"+
-    "\1\0\1\53\1\22\2\54\1\22\1\0\1\22\1\0"+
-    "\2\55\1\22\1\0\2\22\1\0\2\56\1\22\1\0"+
-    "\1\57\2\60\3\0\1\61";
+    "\1\25\1\0\1\26\1\27\1\0\1\30\1\31\1\32"+
+    "\1\0\1\33\1\0\1\34\1\35\1\36\5\22\1\37"+
+    "\3\22\1\40\6\22\1\41\1\0\1\14\7\22\1\42"+
+    "\1\43\3\22\1\44\1\22\1\0\1\45\1\22\1\46"+
+    "\3\22\1\47\3\22\1\50\1\22\1\51\1\52\1\22"+
+    "\1\53\1\22\1\54\2\22\1\55\3\22\1\56\1\22"+
+    "\1\57\1\60\3\0\1\61";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[145];
+    int [] result = new int[117];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -149,28 +144,24 @@ public class LexerCopias implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\62\0\144\0\226\0\310\0\62\0\372\0\u012c"+
-    "\0\62\0\62\0\u015e\0\u0190\0\62\0\u01c2\0\u01f4\0\u0226"+
-    "\0\62\0\62\0\u0258\0\u028a\0\u02bc\0\u02ee\0\u0320\0\u0352"+
-    "\0\u0384\0\u03b6\0\u03e8\0\u041a\0\u044c\0\u047e\0\u04b0\0\u04e2"+
-    "\0\u0514\0\u0546\0\62\0\u0578\0\62\0\u05aa\0\u05dc\0\62"+
-    "\0\310\0\62\0\62\0\u012c\0\62\0\62\0\62\0\u060e"+
-    "\0\u0640\0\u0672\0\62\0\62\0\62\0\u06a4\0\u06d6\0\u0708"+
-    "\0\u073a\0\u076c\0\u02ee\0\u079e\0\u07d0\0\u0802\0\u02ee\0\u0834"+
-    "\0\u0866\0\u0898\0\u08ca\0\u08fc\0\u092e\0\62\0\62\0\u0960"+
-    "\0\u0992\0\u0640\0\u0672\0\u09c4\0\u09f6\0\u0a28\0\u0a5a\0\u0a8c"+
-    "\0\u0abe\0\u0af0\0\u0b22\0\u0b54\0\u02ee\0\u02ee\0\u0b86\0\u0bb8"+
-    "\0\u0bea\0\u0c1c\0\u02ee\0\u0c4e\0\u0c80\0\u060e\0\u0cb2\0\u02ee"+
-    "\0\62\0\u0ce4\0\u0d16\0\u0d48\0\u0d7a\0\u0dac\0\u02ee\0\62"+
-    "\0\u0dde\0\u0e10\0\u0e42\0\u0e74\0\u0ea6\0\u02ee\0\u0ed8\0\u0f0a"+
-    "\0\u02ee\0\62\0\u02ee\0\62\0\u0f3c\0\u02ee\0\u0f6e\0\62"+
-    "\0\u0fa0\0\u02ee\0\62\0\u0fd2\0\u1004\0\u1036\0\u1068\0\u02ee"+
-    "\0\62\0\u109a\0\u10cc\0\u10fe\0\u1130\0\u1162\0\u02ee\0\62"+
-    "\0\u1194\0\u11c6\0\u02ee\0\u02ee\0\62\0\u11f8\0\u122a\0\u125c"+
-    "\0\62";
+    "\0\0\0\60\0\140\0\220\0\300\0\60\0\360\0\u0120"+
+    "\0\60\0\60\0\u0150\0\u0180\0\60\0\u01b0\0\u01e0\0\u0210"+
+    "\0\60\0\60\0\u0240\0\u0270\0\u02a0\0\u02d0\0\u0300\0\u0330"+
+    "\0\u0360\0\u0390\0\u03c0\0\u03f0\0\u0420\0\u0450\0\u0480\0\u04b0"+
+    "\0\u04e0\0\u0510\0\60\0\u0540\0\60\0\60\0\300\0\60"+
+    "\0\60\0\u0120\0\60\0\60\0\60\0\u0570\0\u05a0\0\u05d0"+
+    "\0\60\0\60\0\60\0\u0600\0\u0630\0\u0660\0\u0690\0\u06c0"+
+    "\0\u02d0\0\u06f0\0\u0720\0\u0750\0\u02d0\0\u0780\0\u07b0\0\u07e0"+
+    "\0\u0810\0\u0840\0\u0870\0\60\0\u08a0\0\u05d0\0\u08d0\0\u0900"+
+    "\0\u0930\0\u0960\0\u0990\0\u09c0\0\u09f0\0\u02d0\0\u02d0\0\u0a20"+
+    "\0\u0a50\0\u0a80\0\u02d0\0\u0ab0\0\u0ae0\0\60\0\u0b10\0\u02d0"+
+    "\0\u0b40\0\u0b70\0\u0ba0\0\u02d0\0\u0bd0\0\u0c00\0\u0c30\0\u02d0"+
+    "\0\u0c60\0\u02d0\0\u02d0\0\u0c90\0\u02d0\0\u0cc0\0\u02d0\0\u0cf0"+
+    "\0\u0d20\0\u02d0\0\u0d50\0\u0d80\0\u0db0\0\u02d0\0\u0de0\0\u02d0"+
+    "\0\u02d0\0\u0e10\0\u0e40\0\u0e70\0\60";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[145];
+    int [] result = new int[117];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -195,70 +186,62 @@ public class LexerCopias implements java_cup.runtime.Scanner {
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\2\3\1\0\1\4\1\5\1\6\1\7\1\10"+
     "\1\11\1\12\1\13\1\14\1\15\1\16\1\2\1\17"+
-    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27"+
-    "\1\30\1\31\1\32\1\33\2\26\1\34\2\26\1\35"+
-    "\3\26\1\36\1\37\1\40\1\26\1\41\1\42\1\43"+
-    "\1\44\1\45\1\46\1\47\1\2\63\0\2\3\104\0"+
-    "\1\50\34\0\5\51\1\52\54\51\7\0\1\53\52\0"+
-    "\10\54\1\52\51\54\13\0\1\55\62\0\1\56\63\0"+
-    "\1\57\56\0\1\60\4\0\1\61\60\0\1\62\1\0"+
-    "\1\20\65\0\1\63\61\0\1\64\61\0\1\65\55\0"+
-    "\1\26\5\0\25\26\27\0\1\26\5\0\17\26\1\66"+
-    "\5\26\27\0\1\26\5\0\1\67\12\26\1\70\1\26"+
-    "\1\71\7\26\27\0\1\26\5\0\4\26\1\72\10\26"+
-    "\1\73\7\26\27\0\1\26\5\0\13\26\1\74\11\26"+
-    "\27\0\1\26\5\0\1\75\14\26\1\76\7\26\27\0"+
-    "\1\26\5\0\5\26\1\77\17\26\27\0\1\26\5\0"+
-    "\4\26\1\100\20\26\27\0\1\26\5\0\4\26\1\101"+
-    "\20\26\27\0\1\26\5\0\24\26\1\102\27\0\1\26"+
-    "\5\0\17\26\1\103\5\26\27\0\1\26\5\0\1\104"+
-    "\24\26\27\0\1\26\5\0\7\26\1\105\15\26\63\0"+
-    "\1\106\40\0\1\107\100\0\1\110\6\0\3\60\1\0"+
-    "\7\60\1\111\46\60\1\0\1\61\1\112\16\0\1\61"+
-    "\5\0\25\61\27\0\1\113\61\0\1\26\5\0\4\26"+
-    "\1\114\20\26\27\0\1\26\5\0\20\26\1\115\4\26"+
-    "\4\0\1\116\22\0\1\26\5\0\1\117\24\26\27\0"+
-    "\1\26\5\0\14\26\1\120\10\26\27\0\1\26\5\0"+
-    "\5\26\1\121\17\26\27\0\1\26\5\0\20\26\1\122"+
-    "\4\26\4\0\1\123\22\0\1\26\5\0\13\26\1\124"+
-    "\11\26\27\0\1\26\5\0\17\26\1\125\5\26\27\0"+
-    "\1\26\5\0\21\26\1\126\3\26\27\0\1\26\5\0"+
-    "\16\26\1\127\6\26\27\0\1\26\5\0\10\26\1\130"+
-    "\14\26\3\0\1\131\23\0\1\26\5\0\22\26\1\132"+
-    "\2\26\27\0\1\26\5\0\17\26\1\133\5\26\27\0"+
-    "\1\26\5\0\10\26\1\134\14\26\3\0\1\135\41\0"+
-    "\1\131\17\0\1\131\2\0\3\60\1\0\7\60\1\111"+
-    "\4\60\1\136\41\60\21\0\1\26\5\0\1\137\24\26"+
-    "\27\0\1\26\5\0\4\26\1\140\20\26\41\0\1\141"+
-    "\47\0\1\26\5\0\20\26\1\142\4\26\4\0\1\143"+
-    "\22\0\1\26\5\0\20\26\1\144\4\26\4\0\1\145"+
-    "\22\0\1\26\5\0\1\146\24\26\27\0\1\26\5\0"+
-    "\4\26\1\147\20\26\41\0\1\150\47\0\1\26\5\0"+
-    "\20\26\1\151\4\26\4\0\1\152\22\0\1\26\5\0"+
-    "\22\26\1\153\2\26\27\0\1\26\5\0\21\26\1\154"+
-    "\3\26\56\0\1\155\32\0\1\26\5\0\4\26\1\156"+
-    "\20\26\27\0\1\26\5\0\13\26\1\157\11\26\50\0"+
-    "\1\160\40\0\1\26\5\0\12\26\1\161\12\26\5\0"+
-    "\1\162\21\0\1\26\5\0\20\26\1\163\4\26\4\0"+
-    "\1\164\50\0\1\164\10\0\1\164\22\0\1\26\5\0"+
-    "\15\26\1\165\3\26\1\166\3\26\52\0\1\167\3\0"+
-    "\1\170\32\0\1\26\5\0\22\26\1\171\2\26\27\0"+
-    "\1\26\5\0\4\26\1\172\20\26\41\0\1\173\47\0"+
-    "\1\26\5\0\10\26\1\174\14\26\3\0\1\175\23\0"+
-    "\1\26\5\0\2\26\1\176\22\26\37\0\1\177\51\0"+
-    "\1\26\5\0\4\26\1\200\20\26\41\0\1\201\47\0"+
-    "\1\26\5\0\13\26\1\202\11\26\50\0\1\203\40\0"+
-    "\1\26\5\0\13\26\1\204\11\26\27\0\1\26\5\0"+
-    "\17\26\1\205\5\26\54\0\1\206\34\0\1\26\5\0"+
-    "\7\26\1\207\15\26\44\0\1\210\44\0\1\26\5\0"+
-    "\4\26\1\211\20\26\41\0\1\212\47\0\1\26\5\0"+
-    "\21\26\1\213\3\26\27\0\1\26\5\0\4\26\1\214"+
-    "\20\26\41\0\1\215\45\0\1\216\1\0\1\26\5\0"+
-    "\25\26\25\0\1\216\104\0\1\217\63\0\1\220\52\0"+
-    "\1\221\24\0";
+    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\2"+
+    "\1\26\1\27\1\30\1\31\1\32\1\33\2\26\1\34"+
+    "\1\26\1\35\3\26\1\36\1\37\1\40\1\26\1\41"+
+    "\1\42\1\43\1\44\1\45\61\0\2\3\102\0\1\46"+
+    "\32\0\5\47\1\50\52\47\7\0\1\51\50\0\10\52"+
+    "\1\50\47\52\13\0\1\53\60\0\1\54\61\0\1\55"+
+    "\54\0\1\56\4\0\1\57\56\0\1\60\1\0\1\20"+
+    "\63\0\1\61\57\0\1\62\57\0\1\63\53\0\1\26"+
+    "\5\0\26\26\24\0\1\26\5\0\20\26\1\64\5\26"+
+    "\24\0\1\26\5\0\2\26\1\65\11\26\1\66\1\26"+
+    "\1\67\7\26\24\0\1\26\5\0\6\26\1\70\7\26"+
+    "\1\71\7\26\24\0\1\26\5\0\14\26\1\72\11\26"+
+    "\24\0\1\26\5\0\2\26\1\73\13\26\1\74\7\26"+
+    "\24\0\1\26\5\0\7\26\1\75\16\26\24\0\1\26"+
+    "\5\0\6\26\1\76\17\26\24\0\1\26\5\0\6\26"+
+    "\1\77\17\26\24\0\1\26\5\0\25\26\1\100\24\0"+
+    "\1\26\5\0\20\26\1\101\5\26\24\0\1\26\5\0"+
+    "\2\26\1\102\23\26\24\0\1\26\5\0\11\26\1\103"+
+    "\14\26\61\0\1\104\1\0\13\56\1\105\44\56\2\57"+
+    "\2\0\54\57\21\0\1\106\57\0\1\26\5\0\6\26"+
+    "\1\107\17\26\24\0\1\26\5\0\21\26\1\110\4\26"+
+    "\24\0\1\26\5\0\2\26\1\111\23\26\24\0\1\26"+
+    "\5\0\15\26\1\112\10\26\24\0\1\26\5\0\7\26"+
+    "\1\113\16\26\24\0\1\26\5\0\21\26\1\114\4\26"+
+    "\24\0\1\26\5\0\14\26\1\115\11\26\24\0\1\26"+
+    "\5\0\20\26\1\116\5\26\24\0\1\26\5\0\22\26"+
+    "\1\117\3\26\24\0\1\26\5\0\17\26\1\120\6\26"+
+    "\24\0\1\26\5\0\12\26\1\121\13\26\24\0\1\26"+
+    "\5\0\23\26\1\122\2\26\24\0\1\26\5\0\20\26"+
+    "\1\123\5\26\24\0\1\26\5\0\12\26\1\124\13\26"+
+    "\3\0\13\56\1\125\4\56\1\126\37\56\21\0\1\26"+
+    "\5\0\2\26\1\127\23\26\24\0\1\26\5\0\6\26"+
+    "\1\130\17\26\24\0\1\26\5\0\21\26\1\131\4\26"+
+    "\24\0\1\26\5\0\21\26\1\132\4\26\24\0\1\26"+
+    "\5\0\2\26\1\133\23\26\24\0\1\26\5\0\6\26"+
+    "\1\134\17\26\24\0\1\26\5\0\21\26\1\135\4\26"+
+    "\24\0\1\26\5\0\23\26\1\136\2\26\24\0\1\26"+
+    "\5\0\22\26\1\137\3\26\24\0\1\26\5\0\6\26"+
+    "\1\140\17\26\24\0\1\26\5\0\14\26\1\141\11\26"+
+    "\3\0\13\56\1\125\4\56\1\0\37\56\21\0\1\26"+
+    "\5\0\13\26\1\142\12\26\24\0\1\26\5\0\21\26"+
+    "\1\143\4\26\24\0\1\26\5\0\16\26\1\144\3\26"+
+    "\1\145\3\26\24\0\1\26\5\0\23\26\1\146\2\26"+
+    "\24\0\1\26\5\0\6\26\1\147\17\26\24\0\1\26"+
+    "\5\0\12\26\1\150\13\26\24\0\1\26\5\0\4\26"+
+    "\1\151\21\26\24\0\1\26\5\0\6\26\1\152\17\26"+
+    "\24\0\1\26\5\0\14\26\1\153\11\26\24\0\1\26"+
+    "\5\0\14\26\1\154\11\26\24\0\1\26\5\0\20\26"+
+    "\1\155\5\26\24\0\1\26\5\0\11\26\1\156\14\26"+
+    "\24\0\1\26\5\0\6\26\1\157\17\26\24\0\1\26"+
+    "\5\0\22\26\1\160\3\26\24\0\1\26\5\0\6\26"+
+    "\1\161\17\26\22\0\1\162\1\0\1\26\5\0\26\26"+
+    "\46\0\1\163\61\0\1\164\51\0\1\165\20\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[4750];
+    int [] result = new int[3744];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -302,18 +285,12 @@ public class LexerCopias implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\3\1\1\11\2\1\2\11\2\1\1\11"+
-    "\3\1\2\11\20\1\1\11\1\1\1\11\2\1\1\11"+
-    "\1\0\2\11\1\0\3\11\3\0\3\11\20\1\2\11"+
-    "\2\0\4\1\1\0\4\1\1\0\5\1\1\0\3\1"+
-    "\1\0\3\1\1\11\1\1\1\0\1\1\1\0\2\1"+
-    "\1\11\1\1\1\0\2\1\1\0\2\1\1\0\1\1"+
-    "\1\11\1\1\1\11\2\1\1\0\1\11\2\1\1\11"+
-    "\1\1\1\0\1\1\1\0\1\1\1\11\1\1\1\0"+
-    "\2\1\1\0\1\1\1\11\1\1\1\0\2\1\1\11"+
-    "\3\0\1\11";
+    "\3\1\2\11\20\1\1\11\1\1\2\11\1\0\2\11"+
+    "\1\0\3\11\1\0\1\1\1\0\3\11\20\1\1\11"+
+    "\1\0\17\1\1\0\1\11\33\1\3\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[145];
+    int [] result = new int[117];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -389,8 +366,9 @@ public class LexerCopias implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
-    public static LinkedList<ErrorLex> errores = new LinkedList<ErrorLex>();
+    public LinkedList<ErrorLex> errores = new LinkedList<ErrorLex>();
     public LinkedList<String> comentarios = new LinkedList<String>();
+    public LinkedList<Token> tkns = new LinkedList<Token>();
 
 
   /**
@@ -802,7 +780,7 @@ public class LexerCopias implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { System.out.println("[ERROR] "+yytext());
-                                ErrorLex err = new ErrorLex("No es parte del lenguaje actual", yytext(), yyline, yycolumn);
+                                ErrorLex err = new ErrorLex("Error Lexico", yytext(), yyline, yycolumn);
                                 errores.add(err);
             }
             // fall through
@@ -814,204 +792,238 @@ public class LexerCopias implements java_cup.runtime.Scanner {
           case 51: break;
           case 3:
             { System.out.println(yytext() + " Token: NOT");
+                                tkns.add(new Token("not", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.NOT, yycolumn, yyline, yytext());
             }
             // fall through
           case 52: break;
           case 4:
             { System.out.println(yytext() + " Token: MODULO");
+                                tkns.add(new Token("modulo", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.MODULO, yycolumn, yyline, yytext());
             }
             // fall through
           case 53: break;
           case 5:
             { System.out.println(yytext() + " Token: PARENTESIS_A");
+                                tkns.add(new Token("parentesi_a", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.PARENTESIS_A, yycolumn, yyline, yytext());
             }
             // fall through
           case 54: break;
           case 6:
             { System.out.println(yytext() + " Token: PARENTESIS_C");
+                                tkns.add(new Token("parentesi_c", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.PARENTESIS_C, yycolumn, yyline, yytext());
             }
             // fall through
           case 55: break;
           case 7:
             { System.out.println(yytext() + " Token: ASTERISCO");
+                                tkns.add(new Token("asterisco", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.ASTERISCO, yycolumn, yyline, yytext());
             }
             // fall through
           case 56: break;
           case 8:
             { System.out.println(yytext() + " Token: MAS");
+                                tkns.add(new Token("mas", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.MAS, yycolumn, yyline, yytext());
             }
             // fall through
           case 57: break;
           case 9:
             { System.out.println(yytext() + " Token: COMA");
+                                tkns.add(new Token("coma", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.COMA, yycolumn, yyline, yytext());
             }
             // fall through
           case 58: break;
           case 10:
             { System.out.println(yytext() + " Token: MENOS");
+                                tkns.add(new Token("menos", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.MENOS, yycolumn, yyline, yytext());
             }
             // fall through
           case 59: break;
           case 11:
             { System.out.println(yytext() + " Token: DIAGONAL");
+                                tkns.add(new Token("diagonal", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.DIAGONAL, yycolumn, yyline, yytext());
             }
             // fall through
           case 60: break;
           case 12:
             { System.out.println(yytext() + " Token: NUMERO");
+                                tkns.add(new Token("numero", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());
             }
             // fall through
           case 61: break;
           case 13:
             { System.out.println(yytext() + " Token: DOS_PUNTOS");
+                                tkns.add(new Token("dos_puntos", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.DOS_PUNTOS, yycolumn, yyline, yytext());
             }
             // fall through
           case 62: break;
           case 14:
             { System.out.println(yytext() + " Token: P_COMA");
+                                tkns.add(new Token("p_coma", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.P_COMA, yycolumn, yyline, yytext());
             }
             // fall through
           case 63: break;
           case 15:
             { System.out.println(yytext() + " Token: MENOR");
+                                tkns.add(new Token("menor", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.MENOR, yycolumn, yyline, yytext());
             }
             // fall through
           case 64: break;
           case 16:
             { System.out.println(yytext() + " Token: IGUAL");
+                                tkns.add(new Token("igual", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());
             }
             // fall through
           case 65: break;
           case 17:
             { System.out.println(yytext() + " Token: MAYOR");
+                                tkns.add(new Token("mayor", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.MAYOR, yycolumn, yyline, yytext());
             }
             // fall through
           case 66: break;
           case 18:
             { System.out.println(yytext() + " Token: IDENTIFICADOR");
+                                tkns.add(new Token("identificador", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.IDENTIFICADOR, yycolumn, yyline, yytext());
             }
             // fall through
           case 67: break;
           case 19:
-            { System.out.println(yytext() + " Token: LLAVE_A");
+            { tkns.add(new Token("llave_a", yycolumn, yyline, yytext()));
+                                System.out.println(yytext() + " Token: LLAVE_A");
                                 return new Symbol(sym.LLAVE_A, yycolumn, yyline, yytext());
             }
             // fall through
           case 68: break;
           case 20:
             { System.out.println(yytext() + " Token: LLAVE_C");
+                                tkns.add(new Token("llave_c", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.LLAVE_C, yycolumn, yyline, yytext());
             }
             // fall through
           case 69: break;
           case 21:
             { System.out.println(yytext() + " Token: DESIGUAL");
+                                tkns.add(new Token("desigual", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.DESIGUAL, yycolumn, yyline, yytext());
             }
             // fall through
           case 70: break;
           case 22:
             { System.out.println(yytext() + " Token: CADENA");
+                                tkns.add(new Token("cadena", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.CADENA, yycolumn, yyline, yytext());
             }
             // fall through
           case 71: break;
           case 23:
             { System.out.println(yytext() + " Token: AND");
+                                tkns.add(new Token("and", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.AND, yycolumn, yyline, yytext());
             }
             // fall through
           case 72: break;
           case 24:
             { System.out.println(yytext() + " Token: POTENCIA");
+                                tkns.add(new Token("potencia", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.POTENCIA, yycolumn, yyline, yytext());
             }
             // fall through
           case 73: break;
           case 25:
             { System.out.println(yytext() + " Token: DOBLE_MAS");
+                                tkns.add(new Token("doble_mas", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.DOBLE_MAS, yycolumn, yyline, yytext());
             }
             // fall through
           case 74: break;
           case 26:
             { System.out.println(yytext() + " Token: DOBLE_MENOS");
+                                tkns.add(new Token("doble_menos", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.DOBLE_MENOS, yycolumn, yyline, yytext());
             }
             // fall through
           case 75: break;
           case 27:
-            { System.out.println(yytext() + " Token: MENOR_IGUAL");
-                                return new Symbol(sym.MENOR_IGUAL, yycolumn, yyline, yytext());
+            { System.out.println("Comentario de una linea: "+yytext());
+                                comentarios.add(yytext());
+                                tkns.add(new Token("comentario", yycolumn, yyline, yytext()));
             }
             // fall through
           case 76: break;
           case 28:
-            { System.out.println(yytext() + " Token: DOBLE_IGUAL");
-                                return new Symbol(sym.DOBLE_IGUAL, yycolumn, yyline, yytext());
+            { System.out.println(yytext() + " Token: MENOR_IGUAL");
+                                tkns.add(new Token("menor_igual", yycolumn, yyline, yytext()));
+                                return new Symbol(sym.MENOR_IGUAL, yycolumn, yyline, yytext());
             }
             // fall through
           case 77: break;
           case 29:
-            { System.out.println(yytext() + " Token: MAYOR_IGUAL");
-                                return new Symbol(sym.MAYOR_IGUAL, yycolumn, yyline, yytext());
+            { System.out.println(yytext() + " Token: DOBLE_IGUAL");
+                                tkns.add(new Token("doble_igual", yycolumn, yyline, yytext()));
+                                return new Symbol(sym.DOBLE_IGUAL, yycolumn, yyline, yytext());
             }
             // fall through
           case 78: break;
           case 30:
-            { System.out.println(yytext() + " Token: DO");
-                                return new Symbol(sym.DO, yycolumn, yyline, yytext());
+            { System.out.println(yytext() + " Token: MAYOR_IGUAL");
+                                tkns.add(new Token("mayor_igual", yycolumn, yyline, yytext()));
+                                return new Symbol(sym.MAYOR_IGUAL, yycolumn, yyline, yytext());
             }
             // fall through
           case 79: break;
           case 31:
-            { System.out.println(yytext() + " Token: IF");
-                                return new Symbol(sym.IF, yycolumn, yyline, yytext());
+            { System.out.println(yytext() + " Token: DO");
+                                tkns.add(new Token("do", yycolumn, yyline, yytext()));
+                                return new Symbol(sym.DO, yycolumn, yyline, yytext());
             }
             // fall through
           case 80: break;
           case 32:
-            { System.out.println(yytext() + " Token: OR");
-                                return new Symbol(sym.OR, yycolumn, yyline, yytext());
+            { System.out.println(yytext() + " Token: IF");
+                                tkns.add(new Token("if", yycolumn, yyline, yytext()));
+                                return new Symbol(sym.IF, yycolumn, yyline, yytext());
             }
             // fall through
           case 81: break;
           case 33:
-            { System.out.println(yytext() + " Token: COMENTARIO_UNA_LINEA");
-                                comentarios.add(yytext());
+            { System.out.println(yytext() + " Token: OR");
+                                tkns.add(new Token("or", yycolumn, yyline, yytext()));
+                                return new Symbol(sym.OR, yycolumn, yyline, yytext());
             }
             // fall through
           case 82: break;
           case 34:
-            { System.out.println(yytext() + " Token: FOR");
+            { tkns.add(new Token("for", yycolumn, yyline, yytext()));
+                                System.out.println(yytext() + " Token: FOR");
                                 return new Symbol(sym.FOR, yycolumn, yyline, yytext());
             }
             // fall through
           case 83: break;
           case 35:
             { System.out.println(yytext() + " Token: LET");
+                                tkns.add(new Token("let", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.LET, yycolumn, yyline, yytext());
             }
             // fall through
           case 84: break;
           case 36:
             { System.out.println(yytext() + " Token: VAR");
+                                tkns.add(new Token("var", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.VAR, yycolumn, yyline, yytext());
             }
             // fall through
@@ -1019,77 +1031,90 @@ public class LexerCopias implements java_cup.runtime.Scanner {
           case 37:
             { System.out.println("Comentario multilinea: "+yytext());
                                 comentarios.add(yytext());
+                                tkns.add(new Token("comentario_multilinea", yycolumn, yyline, yytext()));
             }
             // fall through
           case 86: break;
           case 38:
             { System.out.println(yytext() + " Token: CASE");
+                                tkns.add(new Token("case", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.CASE, yycolumn, yyline, yytext());
             }
             // fall through
           case 87: break;
           case 39:
             { System.out.println(yytext() + " Token: ELSE");
+                                tkns.add(new Token("else", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.ELSE, yycolumn, yyline, yytext());
             }
             // fall through
           case 88: break;
           case 40:
             { System.out.println(yytext() + " Token: TRUE");
+                                tkns.add(new Token("true", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.TRUE, yycolumn, yyline, yytext());
             }
             // fall through
           case 89: break;
           case 41:
             { System.out.println(yytext() + " Token: BREAK");
+                                tkns.add(new Token("break", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.BREAK, yycolumn, yyline, yytext());
             }
             // fall through
           case 90: break;
           case 42:
             { System.out.println(yytext() + " Token: CLASS");
+                                tkns.add(new Token("class", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.CLASS, yycolumn, yyline, yytext());
             }
             // fall through
           case 91: break;
           case 43:
             { System.out.println(yytext() + " Token: CONST");
+                                tkns.add(new Token("const", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.CONST, yycolumn, yyline, yytext());
             }
             // fall through
           case 92: break;
           case 44:
             { System.out.println(yytext() + " Token: FALSE");
+                                tkns.add(new Token("false", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.FALSE, yycolumn, yyline, yytext());
             }
             // fall through
           case 93: break;
           case 45:
-            { System.out.println(yytext() + " Token: WHILE");
+            { tkns.add(new Token("while", yycolumn, yyline, yytext()));
+                                System.out.println(yytext() + " Token: WHILE");
                                 return new Symbol(sym.WHILE, yycolumn, yyline, yytext());
             }
             // fall through
           case 94: break;
           case 46:
-            { System.out.println(yytext() + " Token: SWITCH");
+            { tkns.add(new Token("switch", yycolumn, yyline, yytext()));
+                                System.out.println(yytext() + " Token: SWITCH");
                                 return new Symbol(sym.SWITCH, yycolumn, yyline, yytext());
             }
             // fall through
           case 95: break;
           case 47:
             { System.out.println(yytext() + " Token: DEFAULT");
+                                tkns.add(new Token("defualt", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.DEFAULT, yycolumn, yyline, yytext());
             }
             // fall through
           case 96: break;
           case 48:
             { System.out.println(yytext() + " Token: REQUIRE");
+                                tkns.add(new Token("require", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.REQUIRE, yycolumn, yyline, yytext());
             }
             // fall through
           case 97: break;
           case 49:
             { System.out.println(yytext() + " Token: CONSOLELOG");
+                                tkns.add(new Token("conoslelog", yycolumn, yyline, yytext()));
                                 return new Symbol(sym.CONSOLELOG, yycolumn, yyline, yytext());
             }
             // fall through

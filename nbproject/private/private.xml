@@ -5,20 +5,21 @@
             <url>src/Reporteria/ReporteriaSintactico.cup</url>
             <bookmark id="1">
                 <name/>
-                <line>131</line>
+                <line>134</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/Reporteria/AnalizarReporteria.java</file>
-            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/Reporteria/ReporteriaLexerCup.jflex</file>
+            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/javaant/VerVariables.java</file>
+            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/vistas/ReporteEstadistico.java</file>
             <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/javaant/Comparador.java</file>
-            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/LenguajeCopias/CrearSintactico.java</file>
             <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/javaant/Total.java</file>
-            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/Reporteria/ReporteriaSintactico.cup</file>
+            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/vistas/ReporteTokens.java</file>
             <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/javaant/LectorProyectos.java</file>
+            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/javaant/VerGraficas.java</file>
+            <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/vistas/ReporteErrores.java</file>
             <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/vistas/Menu.java</file>
             <file>file:/C:/Users/jorge/Documents/NetBeansProjects/javaant/src/javaant/Javaant.java</file>
         </group>

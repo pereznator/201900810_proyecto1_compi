@@ -13,7 +13,7 @@ import java.util.LinkedList;
  */
 public class Grafica {
     public String tipo, titulo, titulox, tituloy, archivo = null;
-    public LinkedList<Object> ejex = new LinkedList<Object>();
+    public LinkedList<String> ejex = new LinkedList<String>();
     public LinkedList<Object> valores = new LinkedList<Object>();
     public Grafica(){}
     

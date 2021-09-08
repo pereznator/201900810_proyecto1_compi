@@ -32,6 +32,7 @@ public class Javaant {
         //generarLexerCup();
         Menu menu = new Menu();
         menu.setVisible(true);
+        
     }
     
     public static void generarSintactico(String ruta) {

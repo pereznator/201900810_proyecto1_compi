@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import models.Puntaje;
 import javaant.Comparador;
 import models.Clase;
+import models.PuntajeEspecifico;
 
 public class Total {
     
@@ -14,6 +15,16 @@ public class Total {
     public Total(LinkedList<Comparador> comparadores) {
         this.comparadores = comparadores;
         verPuntajes();
+        imprimirEspecificos();
+    }
+    
+    private void imprimirEspecificos() {
+        for (Comparador compa: this.comparadores) {
+            System.out.println("======Puntajes para: "+compa.archivo1.nombre);
+            for (PuntajeEspecifico pun : compa.puntajes) {
+                System.out.println(pun.campo1+": "+pun.campo2 +" - "+pun.valor);
+            }
+        }
     }
     
     private void verPuntajes() {

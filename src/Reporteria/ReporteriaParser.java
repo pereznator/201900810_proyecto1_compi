@@ -11,6 +11,7 @@ import models.VariableReporteria;
 import models.Grafica;
 import models.PuntajeGeneral;
 import models.PuntajeEspecifico;
+import models.ErrorLex;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -237,17 +238,19 @@ public class ReporteriaParser extends java_cup.runtime.lr_parser {
 
 
 
+    public LinkedList<ErrorLex> errores = new LinkedList<ErrorLex>();
     public void syntax_error(Symbol sim){
         System.out.println("Error recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+        errores.add(new ErrorLex("Error Sintactico recuperable", sim.value.toString(), sim.right+1, sim.left+1));
     }
     public void unrecovered_syntax_error(Symbol sim){
         System.out.println("Error NO recuperable: " + sim.value + "| Linea: " + (sim.right + 1) + "| Columna: " + (sim.left + 1));
+        errores.add(new ErrorLex("Error Sintactico No Recuperable", sim.value.toString(), sim.right+1, sim.left+1));
     }
     public LinkedList<Grafica> graficas = new LinkedList<Grafica>();
     public Grafica graf = new Grafica();
     public LinkedList<VariableReporteria> variables = new LinkedList<VariableReporteria>();
     public String[] rutas = new String[2];
-
 
 
 /** Cup generated class to encapsulate user supplied action code.*/

@@ -1,0 +1,382 @@
+{
+   "PuntajeGeneral": 0.20589745044708252,
+  "PuntajeEspecifico": [
+          {
+              "archivo": "contador.js",
+              "tipo": "clase",
+              "nombre": "Contador",
+              "puntaje": 0.2,
+          },
+          {
+              "archivo": "contador.js",
+              "tipo": "metodo",
+              "nombre": "constructor",
+              "puntaje": 0.4,
+          },
+          {
+              "archivo": "contador.js",
+              "tipo": "variable",
+              "nombre": "numero",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "contador.js",
+              "tipo": "variable",
+              "nombre": "queso",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "contador.js",
+              "tipo": "variable",
+              "nombre": "queso",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "clase",
+              "nombre": "draws",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "clase",
+              "nombre": "draws_generator",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "metodo",
+              "nombre": "set_size",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "metodo",
+              "nombre": "draw_triangle",
+              "puntaje": 0.7,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "metodo",
+              "nombre": "draw_sq",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "metodo",
+              "nombre": "imprimir",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "metodo",
+              "nombre": "draw_square",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "tringle_size",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "square_size",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "triangle_draw",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "draw_triangle_i",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "draw_triangle_j",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "sq_draw",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "draw_square_i",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "draw_square_j",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "draw_triangle_draw",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "x",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "a",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "variable",
+              "nombre": "draw_square_draw",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "comentario",
+              "nombre": "//Autor: Erick Lemus",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "comentario",
+              "nombre": "//Esta clase es un ejemplo de un archivo de entrada",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "comentario",
+              "nombre": "/*
+        Si este comentario se repite
+        cuenta como parte de la repitencia
+        */",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "comentario",
+              "nombre": "//Autor: Herlindo Corona",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file1.js",
+              "tipo": "comentario",
+              "nombre": "/*
+    Si este comentario se repite
+    cuenta como parte de la repitencia
+    */",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "clase",
+              "nombre": "ejercicios_numericos",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "clase",
+              "nombre": "complex_exercises",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "metodo",
+              "nombre": "fibonacci_generator",
+              "puntaje": 0.7,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "metodo",
+              "nombre": "torresDeHanoi",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "metodo",
+              "nombre": "hanoi_generator",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "metodo",
+              "nombre": "fact_generator",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "siguiente",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "actual",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "temporal",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "x",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "fibonacci_generator_num1",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "fibonacci_generator_num2",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "fibonacci_generator_i",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "fibonacci_generator_prev",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "fact_generator_product",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "variable",
+              "nombre": "fact_generator_i",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "file2.js",
+              "tipo": "comentario",
+              "nombre": "// fibonacci iterativo",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "clase",
+              "nombre": "Main",
+              "puntaje": 0.2,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "clase",
+              "nombre": "Clase2",
+              "puntaje": 0.2,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "metodo",
+              "nombre": "metodo1",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "metodo",
+              "nombre": "metodo2",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "metodo",
+              "nombre": "verLibros",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "importacion",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "variableGlobal",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "nombre",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "numero",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "boll",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "x",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "variable",
+              "nombre": "contenido",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "comentario",
+              "nombre": "//comentarios123 otro1 asjf",
+              "puntaje": 1.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "comentario",
+              "nombre": "//asdfa",
+              "puntaje": 0.0,
+          },
+          {
+              "archivo": "main.js",
+              "tipo": "comentario",
+              "nombre": "/**
+     * 
+     * @param {type} libro
+     * @param {type} extension
+     * @return void
+     */",
+              "puntaje": 0.0,
+          },
+  ]
+}

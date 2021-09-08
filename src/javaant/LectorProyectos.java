@@ -15,6 +15,7 @@ public class LectorProyectos {
     public LinkedList<String> rutas1 = new LinkedList<String>();
     public LinkedList<String> rutas2 = new LinkedList<String>();
     
+    public boolean error = false;
     private int contador = 0;
     public LectorProyectos(String ruta1, String ruta2){
         getArchivos(ruta1, ruta2);
@@ -24,11 +25,12 @@ public class LectorProyectos {
     public void getArchivos(String ruta1, String ruta2){
         File doc1 = new File(ruta1);
         File doc2 = new File(ruta2);
-        verArchivos(doc1.listFiles());
-        verArchivos2(doc2.listFiles());
-        System.out.println(Archivos.toString());
-        System.out.println("Rutas 1: "+rutas1.toString());
-        System.out.println("Rutas 2: "+rutas2.toString());
+        if (doc1.exists() && doc2.exists()) {
+            verArchivos(doc1.listFiles());
+            verArchivos2(doc2.listFiles());
+        } else {
+            this.error = true;
+        }
     }
     
     public void verArchivos(File[] archivos) {
@@ -71,5 +73,7 @@ public class LectorProyectos {
             this.rutas1.remove(n.intValue());
             this.rutas2.remove(n.intValue());
         }
+        System.out.println("Rutas 1: "+this.rutas1.toString());
+        System.out.println("Rutas 2: "+this.rutas2.toString());
     }
 }

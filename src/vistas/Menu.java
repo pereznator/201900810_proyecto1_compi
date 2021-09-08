@@ -2,27 +2,42 @@
 package vistas;
 
 import Reporteria.AnalizarReporteria;
+import Reporteria.LexerReporteriaCup;
+import Reporteria.ReporteriaParser;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javaant.Comparador;
+import javaant.LectorProyectos;
+import javaant.Total;
+import javaant.VerGraficas;
+import javaant.VerVariables;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import models.ErrorLex;
+import models.Puntaje;
+import models.PuntajeEspecifico;
+import models.SetArchivo;
+import models.Token;
 
 public class Menu extends javax.swing.JFrame {
 
@@ -30,6 +45,13 @@ public class Menu extends javax.swing.JFrame {
     Map<Integer, JPanel> paneles = new HashMap<Integer, JPanel>();
     Map<Integer, JTextArea> textos = new HashMap<Integer, JTextArea>();
     Map<Integer, String> guardarRutas = new HashMap<Integer, String>();
+    Map<Integer, LinkedList<ErrorLex>> panelErroes = new HashMap<Integer, LinkedList<ErrorLex>>();
+    Map<Integer, LinkedList<Token>> panelTokens = new HashMap<Integer, LinkedList<Token>>();
+    Map<Integer, LinkedList<SetArchivo>> panelArchivos = new HashMap<Integer, LinkedList<SetArchivo>>();
+    Map<Integer, Map<String, String>> panelGraficas = new HashMap<Integer, Map<String, String>>();
+    Map<Integer, LinkedList<PuntajeEspecifico>> panelPuntajesE = new HashMap<Integer, LinkedList<PuntajeEspecifico>>();
+    Map<Integer, Double> panelPuntajeG = new HashMap<Integer, Double>();
+    
     int panelActual = 1;
     int cantPestanas = 1;
     JPanel consola = null;
@@ -109,7 +131,6 @@ public class Menu extends javax.swing.JFrame {
         btnCrearPes = new javax.swing.JButton();
         btnCerrarPes = new javax.swing.JButton();
         btnEjecutar = new javax.swing.JButton();
-        btnConsola = new javax.swing.JButton();
         btnReporteErrores = new javax.swing.JButton();
         btnReporteEstadistico = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -125,8 +146,18 @@ public class Menu extends javax.swing.JFrame {
         });
 
         btnReporteTokens.setText("Reporte de Tokens");
+        btnReporteTokens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteTokensActionPerformed(evt);
+            }
+        });
 
         btnReportJson.setText("Reporte JSON");
+        btnReportJson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportJsonActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -163,11 +194,19 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        btnConsola.setText("Consola");
-
         btnReporteErrores.setText("Reporte de Errores");
+        btnReporteErrores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteErroresActionPerformed(evt);
+            }
+        });
 
         btnReporteEstadistico.setText("Reporte Estadístico");
+        btnReporteEstadistico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteEstadisticoActionPerformed(evt);
+            }
+        });
 
         pestanas.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -203,15 +242,13 @@ public class Menu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEjecutar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnConsola)
+                        .addComponent(btnReporteErrores, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReporteErrores)
+                        .addComponent(btnReporteEstadistico, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReporteEstadistico)
+                        .addComponent(btnReporteTokens, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReporteTokens)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReportJson)
+                        .addComponent(btnReportJson, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -230,7 +267,6 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnCrearPes)
                     .addComponent(btnCerrarPes)
                     .addComponent(btnEjecutar)
-                    .addComponent(btnConsola)
                     .addComponent(btnReporteErrores)
                     .addComponent(btnReporteEstadistico)
                     .addComponent(btnReporteTokens)
@@ -368,30 +404,149 @@ public class Menu extends javax.swing.JFrame {
             return;
         }
         try {
-            String acciones = "";
-            AnalizarReporteria analizador = new AnalizarReporteria(guardarRutas.get(panelActual));
-            acciones += "Iniciando Analisis Lexico \n";
-            acciones += analizador.analizarReporteria() + "\n";
+            String acciones = "Iniciando analizador lexico \n";
             
-            acciones += analizador.iniciarLexerReporteria() + "\n";
+            Reader lector = new BufferedReader(new FileReader(guardarRutas.get(panelActual)));
+            LexerReporteriaCup lexer = new LexerReporteriaCup(lector);
+            ReporteriaParser parser = new ReporteriaParser(lexer);
             
+            try {
+                parser.parse();
+            } catch (Exception ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
+            }
+            for (ErrorLex err : lexer.errores) {
+                err.archivo = new File(guardarRutas.get(panelActual)).getName();
+            }
+            LinkedList<ErrorLex> errores = lexer.errores;
+            LinkedList<Token> tokens = lexer.tkns;
+            for (Token tk : tokens) {
+                tk.archivo = new File(guardarRutas.get(panelActual)).getName();
+            }
+            if (errores.size() > 0) {
+                acciones += "Errores Lexicos:\n";
+                for (ErrorLex err : errores) {
+                    acciones += "Simbolo no reconocido: "+err.valor+" en la linea "+err.linea+" en la columna "+err.columna+".\n";
+                }
+                acciones += "Fin analizador lexico";
+            }else {
+                acciones += "No hay errores lexicos! \n";
+            }
             acciones += "Fin Analisis Lexico \n";
+            acciones += "Inicio Analizador Sintactico \n";
+            if (parser.errores.size() > 0) {
+                acciones += "Errores Sintacticos \n";
+                for (ErrorLex error : parser.errores) {
+                    error.archivo = new File(guardarRutas.get(panelActual)).getName();
+                    errores.add(error);
+                    acciones += error.mensaje +": " + error.valor + " en linea: " + error.linea + " columna: " + error.columna + "\n";
+                }
+            }
+            acciones += "Fin Analizador Sintactico\n";
+            if (parser.rutas[0] != null && parser.rutas[1] != null) {
+                String ruta1 = parser.rutas[0].replace("\"", "");
+                String ruta2 = parser.rutas[1].replace("\"", "");
+                
+                acciones += "Analizando las rutas para comparar \n";
+                
+                LectorProyectos proyectos = new LectorProyectos(ruta1, ruta2);
+                
+                if (proyectos.error == false) {
+                    if (proyectos.rutas1.size() > 0 && proyectos.rutas2.size() > 0) {
+                        LinkedList<Puntaje> puntajes = new LinkedList<Puntaje>();
+                        LinkedList<Comparador> comparadores = new LinkedList<Comparador>();
+                        LinkedList<PuntajeEspecifico> pes = new LinkedList<PuntajeEspecifico>();
+                        LinkedList<SetArchivo> archvs = new LinkedList<SetArchivo>();
+                        for (int x = 0; x < proyectos.rutas1.size(); x++) {
+                            Comparador comp = new Comparador(proyectos.rutas1.get(x), proyectos.rutas2.get(x));
+                            puntajes.add(comp.puntaje);
+                            comparadores.add(comp);
+                            for (PuntajeEspecifico pe: comp.puntajes) {
+                                pes.add(pe);
+                            }
+                            errores.addAll(comp.erroresLex);
+                            errores.addAll(comp.erroresSin);
+                            tokens.addAll(comp.tkns);
+                            
+                            archvs.add(new SetArchivo(comp.archivo1, comp.archivo2));
+                        }
+                        panelErroes.put(this.panelActual, errores);
+                        panelTokens.put(this.panelActual, tokens);
+                        panelArchivos.put(this.panelActual, archvs);
+                        panelPuntajesE.put(this.panelActual, pes);
+                        
+                        Total total = new Total(comparadores);
+                        panelPuntajeG.put(this.panelActual, total.total);
+                        VerVariables vars = new VerVariables(parser.variables, total.total);
+                        VerGraficas grafs = new VerGraficas(parser.graficas, vars, pes, comparadores);
+                        panelGraficas.put(this.panelActual, grafs.rutas);
+                        acciones += grafs.acciones;
+                    }
+                }else {
+                    acciones += "Las rutas para comparar no existen \n";
+                }
+            }else {
+                acciones += "No se han encontrado rutas para analizar. \n";
+            }
             
-            acciones += "Iniciando Analisis Sintactico \n";
-            //analizador.analiadorSintactico();
             this.txtConsola.setText(acciones);
         } catch (IOException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         
     }//GEN-LAST:event_btnEjecutarActionPerformed
+
+    private void btnReporteErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteErroresActionPerformed
+        if (panelErroes.containsKey(this.panelActual)) {
+            ReporteErrores reporte = new ReporteErrores(panelErroes.get(this.panelActual));
+            reporte.generarReporte();
+            String consol = txtConsola.getText() + reporte.estado;
+            txtConsola.setText(consol);
+        }else {
+            System.out.println("Aun no hay erroes!!");
+        }
+    }//GEN-LAST:event_btnReporteErroresActionPerformed
+
+    private void btnReporteTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteTokensActionPerformed
+        if (panelTokens.containsKey(this.panelActual)) {
+            ReporteTokens reporte = new ReporteTokens(panelTokens.get(this.panelActual));
+            reporte.generarReporte();
+            String consol = txtConsola.getText() + reporte.estado;
+            txtConsola.setText(consol);
+        }else {
+            System.out.println("Aun no hay tokens!");
+        }
+    }//GEN-LAST:event_btnReporteTokensActionPerformed
+
+    private void btnReporteEstadisticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteEstadisticoActionPerformed
+        if (panelArchivos.containsKey(this.panelActual) && panelGraficas.containsKey(this.panelActual)) {
+            ReporteEstadistico reporte = new ReporteEstadistico(panelArchivos.get(this.panelActual), panelGraficas.get(this.panelActual));
+            reporte.generarReporte();
+            String consol = txtConsola.getText() + reporte.estado;
+            txtConsola.setText(consol);
+        }else {
+            System.out.println("Aun no hay archivos y graficas!");
+        }
+    }//GEN-LAST:event_btnReporteEstadisticoActionPerformed
+
+    private void btnReportJsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportJsonActionPerformed
+        if (panelPuntajesE.containsKey(this.panelActual) && panelPuntajeG.containsKey(this.panelActual)) {
+            ReporteJson reporte = new ReporteJson(panelPuntajesE.get(this.panelActual), panelPuntajeG.get(this.panelActual));
+            reporte.generarReporte();
+            String consol = txtConsola.getText() + reporte.estado;
+            txtConsola.setText(consol);
+        }else {
+            System.out.println("Aun no hay archivos y graficas!");
+        }
+    }//GEN-LAST:event_btnReportJsonActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArchivo;
     private javax.swing.JButton btnCerrarPes;
-    private javax.swing.JButton btnConsola;
     private javax.swing.JButton btnCrearPes;
     private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnGuardar;

@@ -40,15 +40,13 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnEjecutar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnConsola" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReporteErrores" min="-2" pref="183" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnReporteErrores" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReporteEstadistico" min="-2" pref="163" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnReporteEstadistico" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReporteTokens" min="-2" pref="158" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnReporteTokens" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnReportJson" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReportJson" min="-2" pref="110" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -72,7 +70,6 @@
                   <Component id="btnCrearPes" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCerrarPes" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnEjecutar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnConsola" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnReporteErrores" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnReporteEstadistico" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnReporteTokens" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -100,11 +97,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Reporte de Tokens"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteTokensActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnReportJson">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reporte JSON"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReportJsonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGuardar">
       <Properties>
@@ -146,20 +149,21 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEjecutarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnConsola">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Consola"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="btnReporteErrores">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reporte de Errores"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteErroresActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnReporteEstadistico">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reporte Estad&#xed;stico"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteEstadisticoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>

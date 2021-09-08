@@ -17,8 +17,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Archivo;
 import models.Clase;
+import models.ErrorLex;
 import models.Metodo;
 import models.Puntaje;
+import models.PuntajeEspecifico;
+import models.Token;
 
 public class Comparador {
     
@@ -37,6 +40,12 @@ public class Comparador {
     int metodosRepetidos = 0;
     int clasesRepetidas = 0;
     
+    public LinkedList<PuntajeEspecifico> puntajes = new LinkedList<PuntajeEspecifico>();
+    
+    public LinkedList<ErrorLex> erroresLex = new LinkedList<ErrorLex>();
+    public LinkedList<ErrorLex> erroresSin = new LinkedList<ErrorLex>();
+    public LinkedList<Token> tkns = new LinkedList<Token>();
+    
     public Comparador(String ruta1, String ruta2) {
         this.ruta1 = ruta1;
         this.ruta2 = ruta2;
@@ -48,14 +57,16 @@ public class Comparador {
         Optional<String> extension = Optional.ofNullable(this.ruta1).filter(f -> f.contains(".")).map(f -> f.substring(this.ruta1.lastIndexOf(".") + 1));
         if (extension.get().equals("js")) {
             System.out.println("=======Arvhivo 1==========" + this.ruta1);
+            this.archivo1.nombre = new File(this.ruta1).getName();
             CopiasParser parser1 = analizador(this.ruta1, true);
             if (parser1 != null) {
-                this.archivo1.nombre = new File(this.ruta1).getName();
                 this.archivo1.clases = parser1.clases;
                 this.archivo1.variables = parser1.variables;
                 
                 for (Clase clase : this.archivo1.clases) {
                     this.contClases.put(clase.nombre, 0);
+                    PuntajeEspecifico puntaje = new PuntajeEspecifico(this.archivo1.nombre, "clase", clase.nombre);
+                    this.puntajes.add(puntaje);
                 }
             }
             System.out.println("=======Arvhivo 2==========" + this.ruta2);
@@ -70,6 +81,14 @@ public class Comparador {
                         this.puntaje.repitenciaIdentificadorClase += 0.2;
                         this.clasesRepetidas += 1;
                         this.contClases.put(clase.nombre, 1);
+                        for (PuntajeEspecifico p : this.puntajes) {
+                            if (p.archivo.equals(p.archivo)) {
+                                p.valor += 0.2;
+                            }
+                        }
+                    }else {
+                        PuntajeEspecifico puntaje = new PuntajeEspecifico(this.archivo2.nombre, "clase", clase.nombre);
+                        this.puntajes.add(puntaje);
                     }
                 }
                 
@@ -80,12 +99,11 @@ public class Comparador {
                 imprimirPuntaje();
             }
             System.out.println("===========FIN===========");
-        } else {
-            return;
         }
     }
     
     public CopiasParser analizador(String ruta, boolean primero) {
+        CopiasParser parser = null;
         Reader lector = null;
             try {
                 lector = new BufferedReader(new FileReader(ruta));
@@ -96,42 +114,41 @@ public class Comparador {
             
             if (lector != null)  {
                 LexerCopias lexer = new LexerCopias(lector);
-                //LinkedList<String> comentarios = lexer.comentarios;
                 if (primero == true) {
                     this.archivo1.comentarios = lexer.comentarios;
                 }else {
                     this.archivo2.comentarios = lexer.comentarios;
                 }
                 
-                CopiasParser parser = new CopiasParser(lexer);
+                parser = new CopiasParser(lexer);
                 try{
                     parser.parse();
-                    /*System.out.println("========Comentarios========");
-                    for(int x = 0; x < comentarios.size(); x++) {
-                        System.out.println("Comentario: "+comentarios.get(x));
+                    for (ErrorLex err : lexer.errores) {
+                        err.archivo = this.archivo1.nombre;
                     }
-                    LinkedList<Clase> clases = parser.clases;
-                    System.out.println("=========CLASES=========");
-                    for (int x = 0; x < clases.size(); x++) {
-                        System.out.println("Nombre: "+clases.get(x).nombre+", Lineas: "+clases.get(x).lineas);
-                        System.out.println("Metodos:");
-                        for (int y = 0; y < clases.get(x).metodos.size(); y++) {
-                            System.out.println("    Nombre: "+clases.get(x).metodos.get(y).nombre+", Params: "+clases.get(x).metodos.get(y).params.toString()+", Lineas: "+clases.get(x).metodos.get(y).lineas);
+                    for (Token tkn : lexer.tkns) {
+                        if (primero == true) {
+                            tkn.archivo = "proyecto1/"+this.archivo1.nombre;
+                        }else {
+                            tkn.archivo = "proyecto2/"+this.archivo1.nombre;
                         }
                     }
-                    System.out.println("========Variables========");
-                    for (int y = 0; y < parser.variables.size(); y++) {
-                        System.out.println("Nombre: "+parser.variables.get(y));
-                    }*/
-                    return parser;
+                    this.tkns.addAll(lexer.tkns);
+                    for (ErrorLex err : parser.errores) {
+                        err.archivo = this.archivo1.nombre;
+                    }
+                    this.erroresLex.addAll(lexer.errores);
+                    this.erroresSin.addAll(parser.errores);
                 } catch (Exception ex) {
                     Logger.getLogger(CrearSintactico.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }else {
             }
-        return null;
+        return parser;
     }
     
     public void compararClases() {
+        
         LinkedList<String> clasesRepetidas = new LinkedList<String>();
         for(Map.Entry<String, Integer> clase : this.contClases.entrySet()) {
             if (clase.getValue() == 1) {
@@ -155,8 +172,10 @@ public class Comparador {
         }
         
         for (int x = 0; x < clases1.size(); x++) {
+            double puntaje = 0;
             if (clases1.get(x).lineas == clases2.get(x).lineas) {
                 this.puntaje.repitenciaLineasClase += 0.4;
+                puntaje += 0.4;
             }
             Map<String, Integer> contMetodos = new HashMap<String, Integer>();
             for (Metodo met : clases1.get(x).metodos) {
@@ -166,6 +185,13 @@ public class Comparador {
                 if (contMetodos.containsKey(met.nombre)) {                   
                     contMetodos.put(met.nombre, 1);
                     this.puntaje.repitenciaMetodosClase += 0.4;
+                    puntaje += 0.4;
+                }
+            }
+            
+            for (PuntajeEspecifico p : this.puntajes) {
+                if (p.archivo.equals(clases1.get(x).nombre)) {
+                    p.valor += puntaje;
                 }
             }
         }
@@ -176,21 +202,39 @@ public class Comparador {
         for (Clase clase : this.archivo1.clases) {
             for (Metodo metodo : clase.metodos) {
                 metodos1.add(metodo);
+                puntajes.add(new PuntajeEspecifico(this.archivo1.nombre, "metodo", metodo.nombre));
             }
         }
         for (Clase clase : this.archivo2.clases) {
+            System.out.println("[METODOS EN LA CLASE: "+clase.nombre+"]");
             for (Metodo metodo : clase.metodos) {
+                boolean repetido = false;
+                System.out.println("- "+metodo.nombre);
                 for (Metodo met1 : metodos1) {
                     if (metodo.nombre.equals(met1.nombre)) {
+                        repetido = true;
+                        double puntajeMetodo = 0.4;
+                        
                         this.metodosRepetidos += 1;
                         this.puntaje.repitenciaIdentificadorMetodo += 0.4;
                         if (metodo.params.size() == met1.params.size()) {
                             this.puntaje.repitenciaParamsMetodo += 0.3;
+                            puntajeMetodo += 0.3;
                         }
                         if (metodo.lineas == met1.lineas) {
                             this.puntaje.repitenciaLineasMetodo += 0.3;
+                            puntajeMetodo += 0.3;
+                        }
+                        
+                        for (PuntajeEspecifico p : this.puntajes) {
+                            if (p.campo1.equals("metodo") && p.campo2.equals(metodo.nombre)) {
+                                p.valor += puntajeMetodo;
+                            }
                         }
                     }
+                }
+                if (!repetido) {
+                    this.puntajes.add(new PuntajeEspecifico(this.archivo1.nombre, "metodo", metodo.nombre));
                 }
             }
         }
@@ -200,11 +244,19 @@ public class Comparador {
         LinkedList<String> variables = new LinkedList<String>();
         for (String variable : this.archivo1.variables) {
             variables.add(variable);
+            this.puntajes.add(new PuntajeEspecifico(this.archivo1.nombre, "variable", variable));
         }
         for (String variable : this.archivo2.variables) {
             if (variables.contains(variable)) {
                 this.variablesRepetidas += 1;
                 this.puntaje.repitenciaVariables += 1;
+                for (PuntajeEspecifico p : this.puntajes) {
+                    if (p.campo1.equals("variable") && p.campo2.equals(variable)) {
+                        p.valor += 1;
+                    }
+                }
+            }else {
+               this.puntajes.add(new PuntajeEspecifico(this.archivo1.nombre, "variable", variable)); 
             }
         }
     }
@@ -213,12 +265,20 @@ public class Comparador {
         Map<String, Integer> comentarios = new HashMap<String, Integer>();
         for (String comentario : this.archivo1.comentarios) {
             comentarios.put(comentario, 0);
+            this.puntajes.add(new PuntajeEspecifico(this.archivo1.nombre, "comentario", comentario));
         }
         for (String comentario : this.archivo2.comentarios) {
             if (comentarios.containsKey(comentario)) {
                 comentarios.put(comentario, 1);
                 this.puntaje.repitenciaComentarios += 1;
                 this.comentariosRepetidos += 1;
+                for (PuntajeEspecifico p : this.puntajes) {
+                    if (p.campo1.equals("comentario") && p.campo2.equals(comentario)) {
+                        p.valor += 1;
+                    }
+                }
+            }else {
+                this.puntajes.add(new PuntajeEspecifico(this.archivo1.nombre, "comentario", comentario));
             }
         }
     }

@@ -14,13 +14,14 @@ import javaant.Javaant;
 import LenguajeCopias.LexerCopias;
 import java.util.LinkedList;
 import models.Clase;
+import models.ErrorLex;
 
 public class CrearSintactico {
 
  
     public static void main(String[] args) throws IOException {
-        //generarSintactico("C:/Users/jorge/Documents/NetBeansProjects/javaant/src/LenguajeCopias");
-        verTokens();
+        generarSintactico("C:/Users/jorge/Documents/NetBeansProjects/javaant/src/LenguajeCopias");
+        //verTokens();
     }
     
     public static void generarSintactico(String ruta) {
@@ -52,6 +53,10 @@ public class CrearSintactico {
             CopiasParser parser = new CopiasParser(lexer);
             try {
                 parser.parse();
+                System.out.println("========Errores========");
+                for (ErrorLex err : parser.errores) {
+                    System.out.println(err.mensaje + ": "+ err.valor + " en linea: " + err.linea + " columna: " + err.columna);
+                }
                 System.out.println("========Comentarios========");
                 for(int x = 0; x < comentarios.size(); x++) {
                     System.out.println("Comentario: "+comentarios.get(x));
